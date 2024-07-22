@@ -51,6 +51,8 @@ namespace backend.Controllers
                 return BadRequest();
             }
 
+            scraplet.Modified = DateTime.Now;
+
             _context.Entry(scraplet).State = EntityState.Modified;
 
             try
@@ -77,6 +79,10 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Scraplet>> PostScraplet(Scraplet scraplet)
         {
+
+            scraplet.Created = DateTime.Now;
+            scraplet.Modified = DateTime.Now;
+
             _context.Scraplets.Add(scraplet);
             await _context.SaveChangesAsync();
 

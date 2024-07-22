@@ -5,6 +5,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+// Allow CORS
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
+            .AllowAnyHeader()
+            .AllowAnyOrigin(); // For localhost only. Allow all
+    });
+});
+
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ScrapletContext>(opt =>
     opt.UseInMemoryDatabase("Scraplets"));
@@ -20,6 +31,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors();
 
 app.UseAuthorization();
 
