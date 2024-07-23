@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Scraplets } from '../Models/Scraplet';
+import { Scraplet } from '../Models/Scraplet';
 import { getScraplets, createScraplet } from '../Services/ScrapletService';
 
 export const useScraplet = () => {
-    const [scraplets, setScraplets] = useState<Scraplets[]>([]);
+    const [scraplets, setScraplets] = useState<Scraplet[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -23,7 +23,7 @@ export const useScraplet = () => {
             });
     }   
 
-    const addScraplet = async (scraplet: Scraplets) => {
+    const addScraplet = async (scraplet: Scraplet) => {
         try {
             const newScraplet = await createScraplet(scraplet);
             setScraplets([...scraplets, newScraplet]);

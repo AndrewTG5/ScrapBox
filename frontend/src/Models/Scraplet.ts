@@ -1,4 +1,4 @@
-export interface Scraplets {
+export interface Scraplet {
     id?: number;
     created?: Date;
     modified?: Date;
