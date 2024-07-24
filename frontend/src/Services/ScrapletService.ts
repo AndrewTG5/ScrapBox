@@ -1,4 +1,4 @@
-import { Scraplet } from '../Models/Scraplet';
+import {Scraplet} from '../Models/Scraplet';
 
 const apiUrl = 'http://localhost:5210/api/scraplets';
 

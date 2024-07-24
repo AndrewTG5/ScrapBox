@@ -1,14 +1,16 @@
-import * as React from 'react';
+import Typography from '@mui/material/Typography';
+import Toolbar from '@mui/material/Toolbar';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import {CircularProgress, FormControlLabel, Switch} from "@mui/material";
 
-export default function ScrapboxAppBar() {
+type Props = {
+    isDarkTheme: boolean,
+    onToggle: () => void,
+    isLoading: boolean
+}
 
+const ScrapboxAppBar = ({isDarkTheme, onToggle, isLoading}: Props) => {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -16,9 +18,12 @@ export default function ScrapboxAppBar() {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Scrapbox
                     </Typography>
+                    {isLoading && <CircularProgress color="inherit" style={{marginRight: "20px"}}/>}
+                    <FormControlLabel control={<Switch checked={isDarkTheme} onChange={onToggle} />} label="Dark theme" />
                 </Toolbar>
             </AppBar>
         </Box>
     );
-
 }
+
+export default ScrapboxAppBar;
