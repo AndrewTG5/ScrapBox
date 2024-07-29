@@ -1,41 +1,42 @@
-import {useEffect} from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Dialog, DialogContent, DialogActions } from "@mui/material";
+import {useNavigate, useParams} from "react-router-dom";
+import {Scraplet} from '../Models/Scraplet'
+import {Dialog, DialogContent, DialogActions} from "@mui/material";
 import Button from "@mui/material/Button/Button";
 import {Stack, TextField} from "@mui/material";
+import {useEffect} from "react";
+import {State} from "@hookstate/core";
 
-import { useScraplet } from '../Hooks/useScraplet'
-
-const ScrapletDialog = () => {
+const ScrapletDialog = ({scrapletState, handleDelete, handleOpenScrapletById, error, loading}: {
+    scrapletState: State<Scraplet|null>,
+    handleDelete: () => void,
+    handleOpenScrapletById: (id: number) => void,
+    error: string,
+    loading: boolean,
+}) => {
+    const openScraplet = scrapletState.get();
     const navigate = useNavigate();
     const params = useParams();
     const id = params.id;
 
-    const { openScraplet, fetchScraplets, fetchScrapletById, deleteScrapletById, loading, error } = useScraplet();
+    console.log(openScraplet);
 
     useEffect(() => {
-        if (id && (!openScraplet || openScraplet?.id !== parseInt(id))) {
-            fetchScrapletById(parseInt(id));
+        if (id && (!openScraplet || openScraplet.id !== parseInt(id))) {
+            handleOpenScrapletById(parseInt(id));
         }
-    }, [fetchScrapletById, id, openScraplet]);
-
-    const handleDelete = async() => {
-        if (openScraplet && openScraplet.id !== undefined) {
-            await deleteScrapletById(openScraplet.id)
-                .then(() => {
-                    fetchScraplets();
-                    navigate('/');
-                })
-        }
-    }
+    }, [handleOpenScrapletById, id, openScraplet]);
 
     if (!openScraplet && error && !loading) {
         navigate('/');
-        return null;
+    }
+
+    const _onClose = () => {
+        scrapletState.set(null);
+        navigate("/");
     }
 
     return (
-        <Dialog open={true} onClose={() => navigate('/')} fullWidth>
+        <Dialog open={true} onClose={_onClose} fullWidth>
             {openScraplet && ( // don't render if we are waiting for loading
                 <>
                     <DialogContent>

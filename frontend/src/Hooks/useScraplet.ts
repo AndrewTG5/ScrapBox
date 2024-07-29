@@ -1,82 +1,80 @@
-import {useEffect, useState} from 'react';
+import { useHookstate } from '@hookstate/core';
 import { Scraplet } from '../Models/Scraplet';
-import { getScraplet, getScraplets, createScraplet, updateScraplet, deleteScraplet } from '../Services/ScrapletService';
+import {getScraplets, createScraplet, updateScraplet, deleteScraplet, getScraplet} from '../Services/ScrapletService';
+import {useEffect} from "react";
 
 export const useScraplet = () => {
-    const [scraplets, setScraplets] = useState<Scraplet[]>([]);
-    const [openScraplet, setOpenScraplet] = useState<Scraplet | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+    const scraplets = useHookstate<Scraplet[]>([]);
+    const openScraplet = useHookstate<Scraplet | null>(null);
+    const loading = useHookstate<boolean>(true);
+    const error = useHookstate<string>("");
 
     useEffect(() => {
         fetchScraplets()
     }, []);
 
     const fetchScraplets = () => {
-        setLoading(true);
+        loading.set(true);
         getScraplets()
             .then((data) => {
-                setScraplets(data);
-                setLoading(false);
+                scraplets.set(data);
+                loading.set(false);
+                error.set("");
             })
-            .catch((error) => {
-                setError(error.message);
-                setLoading(false);
+            .catch((e) => {
+                error.set(e.message);
+                loading.set(false);
             });
     }
-    
+
     const fetchScrapletById = async (id: number) => {
-        setLoading(true);
+        loading.set(true);
         getScraplet(id)
             .then((data) => {
-                setOpenScraplet(data);
-                setLoading(false);
+                openScraplet.set(data);
+                loading.set(false);
             })
-            .catch((error) => {
-                setError(error.message);
-                setLoading(false);
+            .catch((e) => {
+                error.set(e.message);
+                loading.set(false);
             });
     };
 
     const addScraplet = async (scraplet: Scraplet) => {
-        setLoading(true);
+        loading.set(true);
         createScraplet(scraplet)
             .then(() => {
                 fetchScraplets();
-                setLoading(false);
             })
-            .catch((error) => {
-                setError(error.message);
-                setLoading(false);
+            .catch((e) => {
+                error.set(e.message);
+                loading.set(false);
             });
     };
 
     const putScraplet = async (scraplet: Scraplet) => {
-        setLoading(true);
+        loading.set(true);
         updateScraplet(scraplet)
             .then(() => {
                 fetchScraplets();
-                setLoading(false);
             })
-            .catch((error) => {
-                setError(error.message);
-                setLoading(false);
+            .catch((e) => {
+                error.set(e.message);
+                loading.set(false);
             });
     }
 
     const deleteScrapletById = async (id: number) => {
-        setLoading(true);
+        loading.set(true);
         deleteScraplet(id)
             .then(() => {
-                setLoading(false);
+                fetchScraplets()
             })
-            .catch((error) => {
-                setError(error.message);
-                setLoading(false);
+            .catch((e) => {
+                error.set(e.message);
+                loading.set(false);
             });
     }
-
-    console.log(scraplets);
 
     return {
         scraplets,

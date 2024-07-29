@@ -4,13 +4,7 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import {CircularProgress, FormControlLabel, Switch} from "@mui/material";
 
-type Props = {
-    isDarkTheme: boolean,
-    onToggle: () => void,
-    isLoading: boolean
-}
-
-const ScrapboxAppBar = ({isDarkTheme, onToggle, isLoading}: Props) => {
+const ScrapboxAppBar = ({isDarkTheme, onToggle, isLoading}: { isDarkTheme: boolean, onToggle: () => void, isLoading: boolean }) => {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
