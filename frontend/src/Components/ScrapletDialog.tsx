@@ -1,32 +1,30 @@
 import {useNavigate, useParams} from "react-router-dom";
-import {Scraplet} from '../Models/Scraplet'
 import {Dialog, DialogContent, DialogActions} from "@mui/material";
 import Button from "@mui/material/Button/Button";
 import {Stack, TextField} from "@mui/material";
 import {useEffect} from "react";
 import {State} from "@hookstate/core";
+import {Scraplet} from '../Models/Scraplet'
 
 const ScrapletDialog = ({scrapletState, handleDelete, handleOpenScrapletById, error, loading}: {
     scrapletState: State<Scraplet|null>,
     handleDelete: () => void,
     handleOpenScrapletById: (id: number) => void,
-    error: string,
-    loading: boolean,
+    error: State<string>,
+    loading: State<boolean>,
 }) => {
     const openScraplet = scrapletState.get();
     const navigate = useNavigate();
     const params = useParams();
     const id = params.id;
 
-    console.log(openScraplet);
-
     useEffect(() => {
-        if (id && (!openScraplet || openScraplet.id !== parseInt(id))) {
+        if (id && !loading.get() && (!openScraplet || openScraplet.id !== parseInt(id))) {
             handleOpenScrapletById(parseInt(id));
         }
-    }, [handleOpenScrapletById, id, openScraplet]);
+    }, [handleOpenScrapletById, id, openScraplet, loading]);
 
-    if (!openScraplet && error && !loading) {
+    if (!openScraplet && error.get() && !loading.get()) {
         navigate('/');
     }
 

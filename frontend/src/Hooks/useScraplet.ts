@@ -27,7 +27,7 @@ export const useScraplet = () => {
             });
     }
 
-    const fetchScrapletById = async (id: number) => {
+    const fetchScrapletById = (id: number) => {
         loading.set(true);
         getScraplet(id)
             .then((data) => {
@@ -40,7 +40,7 @@ export const useScraplet = () => {
             });
     };
 
-    const addScraplet = async (scraplet: Scraplet) => {
+    const addScraplet = (scraplet: Scraplet) => {
         loading.set(true);
         createScraplet(scraplet)
             .then(() => {
@@ -52,7 +52,7 @@ export const useScraplet = () => {
             });
     };
 
-    const putScraplet = async (scraplet: Scraplet) => {
+    const putScraplet = (scraplet: Scraplet) => {
         loading.set(true);
         updateScraplet(scraplet)
             .then(() => {
@@ -64,9 +64,9 @@ export const useScraplet = () => {
             });
     }
 
-    const deleteScrapletById = async (id: number) => {
+    const deleteScrapletById = (id: number) => {
         loading.set(true);
-        deleteScraplet(id)
+        return deleteScraplet(id)
             .then(() => {
                 fetchScraplets()
             })

@@ -39,7 +39,7 @@ function App() {
     }
 
     const handleFetchScrapletById = (id: number) => {
-        fetchScrapletById(id)
+        fetchScrapletById(id);
     }
 
     const theme = createTheme({
@@ -77,7 +77,7 @@ function App() {
                         <ScrapletCard scraplet={scraplet} key={scraplet.id}/>
                     ))}
                     <Routes>
-                        <Route path="/note/:id" element={<ScrapletDialog handleDelete={handleDelete} handleOpenScrapletById={handleFetchScrapletById} scrapletState={openScraplet} error={error.get()} loading={loading.get()}/>}/>
+                        <Route path="/note/:id" element={<ScrapletDialog handleDelete={handleDelete} handleOpenScrapletById={handleFetchScrapletById} scrapletState={openScraplet} error={error} loading={loading}/>}/>
                     </Routes>
                 </Grid>
             </div>
