@@ -36,7 +36,6 @@ const ScrapletDialog = ({scrapletState, handleDelete, handleOpenScrapletById, ha
         }
     }, [openScraplet]); // only update if openScraplet changes
 
-    console.log(openScraplet)
     if (!openScraplet && error.get() && !loading.get()) {
         navigate('/');
     }

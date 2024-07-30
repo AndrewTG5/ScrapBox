@@ -4,11 +4,17 @@ const apiUrl = 'http://localhost:5210/api/scraplets';
 
 export const getScraplets = async (): Promise<Scraplet[]> => {
     const response = await fetch(apiUrl);
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
     return await response.json();
 }
 
 export const getScraplet = async (id: number): Promise<Scraplet> => {
     const response = await fetch(`${apiUrl}/${id}`);
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
     return await response.json();
 }
 
@@ -20,21 +26,30 @@ export const createScraplet = async (scraplet: newScraplet): Promise<Scraplet> =
         },
         body: JSON.stringify(scraplet)
     });
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
     return await response.json();
 }
 
 export const updateScraplet = async (scraplet: Scraplet): Promise<void> => {
-    await fetch(`${apiUrl}/${scraplet.id}`, {
+    const response = await fetch(`${apiUrl}/${scraplet.id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(scraplet)
     });
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
 }
 
 export const deleteScraplet = async (id: number): Promise<void> => {
-    await fetch(`${apiUrl}/${id}`, {
+    const response = await fetch(`${apiUrl}/${id}`, {
         method: 'DELETE'
     });
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
 }

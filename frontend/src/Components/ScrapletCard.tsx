@@ -9,13 +9,13 @@ import { Scraplet } from '../Models/Scraplet';
 export default function ScrapletCard({ scraplet }: { scraplet: Scraplet }) {
     return (
         <Grid item xs={2} sm={4} md={4}>
-            <Link key={scraplet.id} to={`/note/${scraplet.id}`}>
+            <Link style={{ textDecoration: 'none' }} key={scraplet.id} to={`/note/${scraplet.id}`}>
                 <Card>
                     <CardContent>
-                        <Typography variant="h5" component="div">
+                        <Typography variant="h5" style={{display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden"}}>
                             {scraplet.name}
                         </Typography>
-                        <Typography variant="body2">{scraplet.content}</Typography>
+                        <Typography variant="body2" style={{display: "-webkit-box", WebkitLineClamp: 5, WebkitBoxOrient: "vertical", overflow: "hidden"}}>{scraplet.content}</Typography>
                     </CardContent>
                 </Card>
             </Link>
