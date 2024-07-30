@@ -1,4 +1,4 @@
-import {Scraplet} from '../Models/Scraplet';
+import {Scraplet, newScraplet} from '../Models/Scraplet';
 
 const apiUrl = 'http://localhost:5210/api/scraplets';
 
@@ -12,7 +12,7 @@ export const getScraplet = async (id: number): Promise<Scraplet> => {
     return await response.json();
 }
 
-export const createScraplet = async (scraplet: Scraplet): Promise<Scraplet> => {
+export const createScraplet = async (scraplet: newScraplet): Promise<Scraplet> => {
     const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -23,15 +23,14 @@ export const createScraplet = async (scraplet: Scraplet): Promise<Scraplet> => {
     return await response.json();
 }
 
-export const updateScraplet = async (scraplet: Scraplet): Promise<Scraplet> => {
-    const response = await fetch(`${apiUrl}/${scraplet.id}`, {
+export const updateScraplet = async (scraplet: Scraplet): Promise<void> => {
+    await fetch(`${apiUrl}/${scraplet.id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(scraplet)
     });
-    return await response.json();
 }
 
 export const deleteScraplet = async (id: number): Promise<void> => {
