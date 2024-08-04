@@ -1,8 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using backend.Models;
-using System.Configuration;
 
-var builder = WebApplication.CreateBuilder(args);
+var webApplicationOptions = new WebApplicationOptions
+{
+    ContentRootPath = AppContext.BaseDirectory,
+    Args = args,
+};
+var builder = WebApplication.CreateBuilder(webApplicationOptions);
 
 // Add services to the container.
 
@@ -11,16 +15,14 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
+        policy.AllowAnyOrigin()
             .AllowAnyHeader()
-            .AllowAnyOrigin() // For localhost only. Allow all
             .AllowAnyMethod();
     });
 });
 
 builder.Services.AddControllers();
-builder.Services.AddDbContext<ScrapletContext>(opt =>
-    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")  ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.")));
+builder.Services.AddDbContext<ScrapletContext>(opt => opt.UseSqlite("Data Source=scrapbox.db"));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -40,4 +42,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+app.Run("http://*:5000");

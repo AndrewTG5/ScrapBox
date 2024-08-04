@@ -1,0 +1,23 @@
+name: scrapbox
+services:
+  scrapbox-backend:
+    image: scrapbox-backend
+    container_name: scrapbox-backend
+    restart: 
+    build:
+      context: ./ScrapBox/backend
+      network: host
+      dockerfile: ./Dockerfile
+    ports:
+      - 5000:5000
+
+  scrapbox-frontend:
+    image: scrapbox-frontend
+    container_name: scrapbox-frontend
+    restart: no
+    build:
+      context: ./ScrapBox/frontend
+      network: host
+      dockerfile: ./Dockerfile
+    ports:
+      - 3000:3000

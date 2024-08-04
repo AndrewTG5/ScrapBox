@@ -1,6 +1,6 @@
 import {Scraplet, newScraplet} from '../Models/Scraplet';
 
-const apiUrl = 'http://localhost:5210/api/scraplets';
+const apiUrl = 'http://192.168.1.1:5000/api/scraplets';
 
 export const getScraplets = async (): Promise<Scraplet[]> => {
     const response = await fetch(apiUrl);
